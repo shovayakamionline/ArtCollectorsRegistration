@@ -46,12 +46,13 @@ public class ArtCollectorServiceImpl implements ArtCollectorService {
         Role role = roleRepository.findByName(roleName);
         if(role == null){
             role = new Role();
-            role.setName((roleName));
+            role.setName(roleName);
             roleRepository.save(role);
         }
 
         //Assign the role to the artCollector
-        artCollector.setRoles((Collections.singletonList(role)));
+        artCollector.setRoles(Collections.singletonList(role));
+        artCollector.setCountry(artCollectorDto.getCountry());
         artCollectorRepository.save(artCollector);
 
 
@@ -77,6 +78,7 @@ public class ArtCollectorServiceImpl implements ArtCollectorService {
         artCollectorDto.setFirstName(name[0]);
         artCollectorDto.setLastName(name[1]);
         artCollectorDto.setEmail(artCollector.getEmail());
+        artCollectorDto.setCountry(artCollector.getCountry());
         return artCollectorDto;
     }
 }

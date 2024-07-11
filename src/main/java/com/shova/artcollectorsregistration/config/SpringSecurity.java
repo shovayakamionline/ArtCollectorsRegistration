@@ -24,6 +24,12 @@ public class SpringSecurity {
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(customUserDetailsService)
+                .passwordEncoder(passwordEncoder());
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -31,13 +37,14 @@ public class SpringSecurity {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/art-collector-registration/**").permitAll()
                         .requestMatchers("/index").permitAll()
-                        //  .requestMatchers("/artcollecotrs").hasRole("ADMIN")
+                        .requestMatchers("/").permitAll()
+                        //  .requestMatchers("/artcollectors").hasRole("ADMIN")
                         .requestMatchers("/artcollectors").hasAnyRole("ARTCOLLECTOR", "ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(
                         form -> form
-                                .loginPage("/login")
+                                .loginPage("/login") //custom login page
                                 .loginProcessingUrl("/login")
                                 .defaultSuccessUrl("/artcollectors")
                                 .permitAll()
@@ -47,13 +54,6 @@ public class SpringSecurity {
                                 .permitAll()
                 );
         return http.build();
-
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(customUserDetailsService)
-                .passwordEncoder(passwordEncoder());
-    }
 }

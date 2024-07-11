@@ -22,6 +22,9 @@ public class ArtCollector {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String country;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name ="artcollectors_roles",
@@ -30,14 +33,4 @@ public class ArtCollector {
     )
     private List<Role> roles = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "ArtCollector{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                '}';
-    }
 }

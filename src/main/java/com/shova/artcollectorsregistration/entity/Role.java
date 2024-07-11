@@ -20,12 +20,4 @@ public class Role {
         @ManyToMany(mappedBy = "roles")
         private List<ArtCollector> artCollectors;
 
-        @Override
-        public String toString() {
-                return "Role{" +
-                        "id=" + id +
-                        ", name='" + name + '\'' +
-                        ", artCollectors=" + artCollectors +
-                        '}';
-        }
 }

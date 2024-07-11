@@ -25,6 +25,11 @@ public class AuthorizeController {
     }
 
     @GetMapping("index")
+    public String index() {
+        return "index";
+    }
+
+    @GetMapping("/")
     public String home() {
         return "index";
     }
